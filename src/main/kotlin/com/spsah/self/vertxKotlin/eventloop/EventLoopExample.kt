@@ -1,12 +1,10 @@
 package com.spsah.self.vertxKotlin.eventloop
 
-import io.vertx.core.AbstractVerticle
-import io.vertx.core.DeploymentOptions
-import io.vertx.core.Promise
-import io.vertx.core.Vertx
+import io.vertx.core.*
 import io.vertx.core.impl.logging.Logger
 import io.vertx.core.impl.logging.LoggerFactory
 import io.vertx.core.json.JsonObject
+import java.util.concurrent.TimeUnit
 
 class EventLoopExample : AbstractVerticle() {
 
@@ -15,8 +13,20 @@ class EventLoopExample : AbstractVerticle() {
   companion object {
     @JvmStatic
     fun main(args: Array<String>) {
-      val v = Vertx.vertx()
-      v.deployVerticle(EventLoopExample())
+//      Setting vertx option
+//      1. To wait for half second before generating blocking warning
+//      2. Check above in interval of 1 sec
+//      3. we should not modify event pool size until for specific case
+      val v = Vertx.vertx(
+        VertxOptions()
+          .setMaxEventLoopExecuteTime(500)
+          .setMaxEventLoopExecuteTimeUnit(TimeUnit.MILLISECONDS)
+          .setBlockedThreadCheckInterval(1)
+          .setBlockedThreadCheckIntervalUnit(TimeUnit.SECONDS)
+          .setEventLoopPoolSize(2)
+      )
+      v.deployVerticle(EventLoopExample::class.java,DeploymentOptions()
+        .setInstances(4))
 
     }
   }
