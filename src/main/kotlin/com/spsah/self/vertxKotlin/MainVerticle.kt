@@ -10,13 +10,12 @@ class MainVerticle : AbstractVerticle() {
     @JvmStatic fun main(args: Array<String>) {
       val v = Vertx.vertx()
       v.deployVerticle(MainVerticle())
-      print("HELLO")
+      println("OLD HELLO")
     }
   }
 
   override fun start(startPromise: Promise<Void>) {
-    print("HELLO" +
-      "AND HELLO")
+    println("HELLO " + "AND HELLO")
     vertx
       .createHttpServer()
       .requestHandler { req ->
