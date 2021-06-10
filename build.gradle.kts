@@ -32,6 +32,9 @@ dependencies {
   implementation(platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
   implementation("io.vertx:vertx-lang-kotlin")
   implementation(kotlin("stdlib-jdk8"))
+  // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+  implementation("org.slf4j:slf4j-api:1.7.25")
+
   testImplementation("io.vertx:vertx-junit5")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
